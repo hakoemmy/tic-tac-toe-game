@@ -1,7 +1,9 @@
 import React from 'react';
 
 const turnPlayer = (props) => (
-  <label>Turn: You</label>
+  <label>
+       Turn: <strong>You</strong> 
+    </label>
 );
 
 export default turnPlayer;
