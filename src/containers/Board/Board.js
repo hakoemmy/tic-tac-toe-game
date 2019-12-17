@@ -7,6 +7,7 @@ import Spaces from '../../components/Spaces/Spaces';
 import Movement from '../../components/Movement/Movement';
 import TurnPlayer from '../../components/TurnPlayer/TurnPlayer';
 import NaiveUser from '../../components/NaiveUser/NaiveUser';
+import AiUser from '../../components/AiUser/AiUser';
 
 class Board extends Component{
 
@@ -16,13 +17,9 @@ class Board extends Component{
         return (
             <Aux>
                 <header>
-                      <span>
-                          <Movement/>
-                      </span>
+                      <span><Movement/></span>
                         <Spaces/>
-                      <span>
-                          <TurnPlayer/>
-                      </span>
+                      <span><TurnPlayer/></span>
                  </header>
                 <main className={classes.Board}>
                     <BoardGround/>
@@ -36,13 +33,9 @@ class Board extends Component{
                     <BoardGround/>
                 </main>
                 <footer>
-                     <span>
-                        <NaiveUser/>
-                      </span>
+                     <span><NaiveUser/></span>
                         <Spaces/>
-                      <span>
-                        AI user: <strong>10</strong>
-                      </span> 
+                      <span><AiUser/></span> 
                 </footer>
             </Aux>
         );
