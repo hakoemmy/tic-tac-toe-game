@@ -6,6 +6,7 @@ import BoardGround from '../../components/BoardGround/BoardGround';
 import Spaces from '../../components/Spaces/Spaces';
 import Movement from '../../components/Movement/Movement';
 import TurnPlayer from '../../components/TurnPlayer/TurnPlayer';
+import NaiveUser from '../../components/NaiveUser/NaiveUser';
 
 class Board extends Component{
 
@@ -34,7 +35,15 @@ class Board extends Component{
                     <BoardGround/>
                     <BoardGround/>
                 </main>
-                <footer>player and computer scores</footer>
+                <footer>
+                     <span>
+                        <NaiveUser/>
+                      </span>
+                        <Spaces/>
+                      <span>
+                        AI user: <strong>10</strong>
+                      </span> 
+                </footer>
             </Aux>
         );
     };
