@@ -1,10 +1,14 @@
 import React from 'react';
-import './App.css';
+
+import Board from './containers/Board/Board';
+import Layout from './hoc/Layout/Layout';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Tic Tac toe game</h1>
+    <div>
+       <Layout>
+           <Board/>
+       </Layout>
     </div>
   );
 }
