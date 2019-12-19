@@ -11,9 +11,33 @@ import AiUser from '../../components/AiUser/AiUser';
 
 class Board extends Component{
 
+    state = {
+        isAiUserTurn: false,
+        isNaiveTurn: false,
+        playGround:[
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""]
+          ],
+        naive:{
+            symbol: null,
+            score: 0
+        },
+        aIUser:{
+            symbol: null,
+            score: 0
+        }
+    }
+
 
 
     render(){
+        const board = this.state.playGround.map((innerArr) => {
+                 return innerArr.map((field, i) => {
+                
+                     return <BoardGround key={i} symbol=''/>
+                 })  
+        });
         return (
             <Aux>
                 <header>
@@ -22,15 +46,7 @@ class Board extends Component{
                       <span><TurnPlayer/></span>
                  </header>
                 <main className={classes.Board}>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
-                    <BoardGround/>
+                   {board}
                 </main>
                 <footer>
                      <span><NaiveUser/></span>
