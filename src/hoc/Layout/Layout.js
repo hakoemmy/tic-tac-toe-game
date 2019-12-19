@@ -1,11 +1,11 @@
 import React from 'react';
 
 import classes from './Layout.module.css';
+import Instructions from '../../components/Instructions/Instructions';
 
 const layout = (props) => (
     <div className={classes.Layout}>
-    <h1>Tic Tac Toe Game</h1>
-    <p>Play with an AI player who wins and never loses</p>
+     <Instructions/>
     {props.children}
     </div>
 );
