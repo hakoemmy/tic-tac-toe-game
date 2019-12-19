@@ -47,6 +47,7 @@ class Board extends Component{
             }
           }
         }
+        this.setState({moves: moveCount})
         return moveCount
       };
 
@@ -232,7 +233,9 @@ class Board extends Component{
         return (
             <Aux>
                 <header>
-                      <span><Movement/></span>
+                      <span>
+                        <Movement moves={this.state.moves}/>
+                        </span>
                         <Spaces/>
                       <span><TurnPlayer/></span>
                  </header>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const movement = (props) => (
   <label>
-    Move: <strong>5</strong>
+    Move: <strong>{props.moves}</strong>
   </label>
 );
 
