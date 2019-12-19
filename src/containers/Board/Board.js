@@ -205,29 +205,34 @@ class Board extends Component{
         // }
       };
 
-    naiveTurnHandler = () => {
-
+    naiveTurnHandler = (row, column) => {
+      let symbol = this.state.naive.symbol;
+      this.executeTurn(this.state.playGround, {row, column}, symbol)
+      this.setState({isAiUserTurn: true, isNaiveTurn: false});
+      
     };
 
     aITurnHandler = () => {
         let symbol = this.state.aIUser.symbol;
         let move = this.getBestMove(this.state.playGround,symbol).move;
         this.executeTurn(this.state.playGround, move, symbol)
-        
     };
 
     render(){
+      console.log('[Board] render()...')
         if(this.state.isAiUserTurn){
             this.aITurnHandler();
-            this.setState({isAiUserTurn: false, isNaiveTurn: true});
-            
-
+            this.setState({isAiUserTurn: false, isNaiveTurn: true});    
         }
         let uniqueKey = 0;
-        const board = this.state.playGround.map((innerArr) => {
-                 return innerArr.map((field) => {
+        const board = this.state.playGround.map((innerArr, row) => {
+                 return innerArr.map((field, column) => {
                     uniqueKey++;
-                     return <BoardGround key={uniqueKey} symbol={field}/>
+                     return <BoardGround 
+                     key={uniqueKey} 
+                     symbol={field}
+                     clicked = {() => this.naiveTurnHandler(row, column)}
+                     />
                  })  
         });
         return (
