@@ -9,6 +9,7 @@ import TurnPlayer from '../../components/TurnPlayer/TurnPlayer';
 import NaiveUser from '../../components/NaiveUser/NaiveUser';
 import AiUser from '../../components/AiUser/AiUser';
 
+
 class Board extends Component{
 
     state = {
@@ -32,10 +33,11 @@ class Board extends Component{
 
 
     render(){
+        let uniqueKey = 0;
         const board = this.state.playGround.map((innerArr) => {
-                 return innerArr.map((field, i) => {
-                
-                     return <BoardGround key={i} symbol=''/>
+                 return innerArr.map((field) => {
+                    uniqueKey++;
+                     return <BoardGround key={uniqueKey} symbol=''/>
                  })  
         });
         return (
