@@ -2,11 +2,17 @@ import React from 'react';
 
 import classes from './BoardGround.module.css';
 
-const boardGround = (props) => (
-    <div className={classes.BoardGround}
+const boardGround = (props) => {
+    if(props.symbol !== ""){
+        return (<div className={classes.BoardGround}>
+         {props.symbol}
+        </div>);
+    }
+    return (<div className={classes.BoardGround}
       onClick={props.clicked}>
         {props.symbol}
-    </div>
-);
+        </div>);
+};
+
 
 export default boardGround;
