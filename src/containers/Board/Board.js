@@ -8,6 +8,7 @@ import Movement from '../../components/Movement/Movement';
 import TurnPlayer from '../../components/TurnPlayer/TurnPlayer';
 import NaiveUser from '../../components/NaiveUser/NaiveUser';
 import AiUser from '../../components/AiUser/AiUser';
+import WinnerReporter from '../../components/WinnerReporter/WinnerReporter';
 
 
 class Board extends Component{
@@ -26,7 +27,8 @@ class Board extends Component{
         },
         aIUser:{
             symbol: 'O',
-            score: 0
+            score: 0,
+            doesItWin: false
         },
         moves: 0,
         result: {
@@ -99,7 +101,6 @@ class Board extends Component{
           winningLine = [[0,2], [1,1], [2,0]]
           return {result, winningLine};
         }
-  
 
         if (this.moveCount(board)==9){
           result= this.state.result.tie;
@@ -157,6 +158,7 @@ class Board extends Component{
           let newBoard = copyBoard(board)
           newBoard = this.applyMove(newBoard,move, symbol)
           let result = this.getResult(newBoard,symbol).result
+          
           let score
           if (result == this.state.result.tie) {score = 0}
           else if (result == symbol) {
@@ -188,20 +190,18 @@ class Board extends Component{
         this.applyMove(board,move,symbol)
         let result = this.getResult(board, symbol).result
     
-        if (result === this.state.result.incomplete){
-          this.state.turn = (this.state.turn+1)%2
-        }
+        // if (result === this.state.result.incomplete){
+        //   this.state.turn = (this.state.turn+1)%2
         // } else {
         //   if(result !== this.state.result.tie) {
-        //     let winningPlayer = state.players.find((player)=>{return player.symbol == result})
+        //     let winningPlayer = this.state.aIUser;
         //     winningPlayer.score++
+        //     console.log(winningPlayer);
         //   }
-    
-        //   state.view = VIEW.result
-        //   render()
+           
         // }
-        // if (result==RESULT.incomplete && state.players[state.game.turn].isComputer){
-        //   doComputerMove()
+        // if (result == this.state.result.incomplete && this.state.isAiUserTurn){
+        //   this.aITurnHandler();
         // }
       };
 
@@ -214,7 +214,9 @@ class Board extends Component{
 
     aITurnHandler = () => {
         let symbol = this.state.aIUser.symbol;
-        let move = this.getBestMove(this.state.playGround,symbol).move;
+        let result = this.getBestMove(this.state.playGround,symbol)
+        let move = result.move;
+        console.log(result);
         this.executeTurn(this.state.playGround, move, symbol)
     };
 
@@ -237,6 +239,7 @@ class Board extends Component{
         });
         return (
             <Aux>
+               <WinnerReporter/>
                 <header>
                       <span>
                         <Movement moves={this.state.moves}/>
@@ -248,9 +251,13 @@ class Board extends Component{
                    {board}
                 </main>
                 <footer>
-                     <span><NaiveUser/></span>
+                     <span>
+                       <NaiveUser score={this.state.naive.score}/>
+                       </span>
                         <Spaces/>
-                      <span><AiUser/></span> 
+                      <span>
+                        <AiUser score={this.state.aIUser.score}/>
+                        </span> 
                 </footer>
             </Aux>
         );
