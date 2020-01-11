@@ -16,6 +16,10 @@ class Board extends Component{
     state = {
         isAiUserTurn: true,
         isNaiveTurn: false,
+        isGameOver: false,
+        aIScore: 0,
+        naiveScore: 0,
+        winnerSymbol: '',
         playGround:[
             ["", "", ""],
             ["", "", ""],
@@ -23,17 +27,14 @@ class Board extends Component{
           ],
         naive:{
             symbol: 'X',
-            score: 0
         },
         aIUser:{
             symbol: 'O',
-            score: 0,
-            doesItWin: false
         },
         moves: 0,
         result: {
             incomplete: 0,
-            tie: 3
+            tie: 3,
         },
         turn: Math.round(Math.random()),
 
@@ -205,10 +206,62 @@ class Board extends Component{
         // }
       };
 
+      findWinnerHandler = (player) => {   
+        let result = true;
+        let winningLine = [];
+       for (let j = 0; j < 3; j++) {     //first diagonal
+         result = result && (this.state.playGround[j][j] == player);
+        } 
+        if (result) {
+             return {
+                result: result,
+                player: player
+        };
+      }
+      result = true;
+for (let j = 0; j < 3; j++) {  //second diagonal
+     result = result && (this.state.playGround[2-j][j] == player);
+}
+    if (result) {
+        return {
+            result: result,
+            player: player
+        };
+    }
+for (let k = 0; k < 3; k++) {
+    result = true;
+    for (let j = 0; j < 3; j++) {      //lines 
+        result = result && (this.state.playGround[k][j] == player);
+    }
+    if (result) {
+        return  {
+            result: result,
+            player: player
+        };
+    }    
+    result = true;
+    for (let j = 0; j < 3; j++) {      //colums
+        result = result && (this.state.playGround[j][k] == player);
+    }
+        if (result) {
+            return {
+                result: result,
+                player: player
+            };
+        } 
+}
+     return false;
+    }
     naiveTurnHandler = (row, column) => {
       let symbol = this.state.naive.symbol;
       this.executeTurn(this.state.playGround, {row, column}, symbol)
       this.setState({isAiUserTurn: true, isNaiveTurn: false});
+      const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
+      if(winnerInfo.result){
+        const currentNaiveScore = this.state.naiveScore + 1;
+        const winnerNaiveSymbol = this.state.naive.symbol;
+        this.setState({isGameOver: true, naiveScore: currentNaiveScore, winnerSymbol: winnerNaiveSymbol });
+      }
       
     };
 
@@ -216,8 +269,13 @@ class Board extends Component{
         let symbol = this.state.aIUser.symbol;
         let result = this.getBestMove(this.state.playGround,symbol)
         let move = result.move;
-        console.log(result);
         this.executeTurn(this.state.playGround, move, symbol)
+        const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
+        if(winnerInfo.result){
+          const currentAiScore = this.state.aIScore + 1;
+          const winnerAiSymbol = this.state.aIUser.symbol;
+          this.setState({isGameOver: true, aIScore: currentAiScore, winnerSymbol: winnerAiSymbol});
+        }
     };
 
     render(){
@@ -233,13 +291,17 @@ class Board extends Component{
                      return <BoardGround 
                      key={uniqueKey} 
                      symbol={field}
+                     isGameOver={this.state.isGameOver}
                      clicked = {() => this.naiveTurnHandler(row, column)}
                      />
                  })  
         });
         return (
             <Aux>
-               <WinnerReporter/>
+               <WinnerReporter 
+               isGameOver={ this.state.isGameOver}
+               winnerSymbol={this.state.winnerSymbol}
+               />
                 <header>
                       <span>
                         <Movement moves={this.state.moves}/>
@@ -252,11 +314,11 @@ class Board extends Component{
                 </main>
                 <footer>
                      <span>
-                       <NaiveUser score={this.state.naive.score}/>
+                       <NaiveUser score={this.state.naiveScore}/>
                        </span>
                         <Spaces/>
                       <span>
-                        <AiUser score={this.state.aIUser.score}/>
+                        <AiUser score={this.state.aIScore}/>
                         </span> 
                 </footer>
             </Aux>

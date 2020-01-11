@@ -8,6 +8,11 @@ const boardGround = (props) => {
          {props.symbol}
         </div>);
     }
+    if(props.isGameOver){
+      return (<div className={classes.BoardGround}>
+        {props.symbol}
+       </div>);
+    }
     return (<div className={classes.BoardGround}
       onClick={props.clicked}>
         {props.symbol}
