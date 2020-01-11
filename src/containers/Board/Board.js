@@ -257,18 +257,20 @@ for (let k = 0; k < 3; k++) {
     aITurnHandler = () => {
         let symbol = this.state.aIUser.symbol;
         let result = this.getBestMove(this.state.playGround,symbol)
-        let move = result.move; 
-          console.log(move);
-        this.executeTurn(this.state.playGround, move, symbol)
-        const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
-        if(winnerInfo.result){
-          const currentAiScore = this.state.aIScore + 1;
-          const winnerAiSymbol = this.state.aIUser.symbol;
-          this.setState({isGameOver: true, aIScore: currentAiScore, winnerSymbol: winnerAiSymbol});
+        if(result!=undefined){
+          let move = result.move; 
+          this.executeTurn(this.state.playGround, move, symbol)
+          const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
+          if(winnerInfo.result){
+            const currentAiScore = this.state.aIScore + 1;
+            const winnerAiSymbol = this.state.aIUser.symbol;
+            this.setState({isGameOver: true, aIScore: currentAiScore, winnerSymbol: winnerAiSymbol});
+          }
+          if(!winnerInfo.result && this.state.moves === 8){
+            this.setState({winnerSymbol: '', isGameOver: true});
+          }
         }
-        if(!winnerInfo.result && this.state.moves === 8){
-          this.setState({winnerSymbol: '', isGameOver: true});
-        }
+        
     };
 
     removeReporterHandler = () => {
