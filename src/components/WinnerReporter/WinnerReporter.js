@@ -4,6 +4,19 @@ import classes from './WinnerReporter.module.css';
 
 const winnerReporter = (props) => {
     if(props.isGameOver){ 
+        if(props.winnerSymbol === ''){
+            return (
+                <div className={classes.WinnerReporterActive}>
+                 <div className={classes.Content}>
+                  <span
+                   className={classes.Close}
+                   onClick={props.clicked}>
+                       &times;</span>
+                  <p>DRAW!</p>
+                 </div>
+               </div>
+            );
+        }
         return (
             <div className={classes.WinnerReporterActive}>
              <div className={classes.Content}>

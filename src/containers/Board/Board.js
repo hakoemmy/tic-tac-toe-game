@@ -248,19 +248,26 @@ for (let k = 0; k < 3; k++) {
         const winnerNaiveSymbol = this.state.naive.symbol;
         this.setState({isGameOver: true, naiveScore: currentNaiveScore, winnerSymbol: winnerNaiveSymbol });
       }
+      if(!winnerInfo.result && this.state.moves === 8){
+        this.setState({winnerSymbol: '', isGameOver: true});
+      }
       
     };
 
     aITurnHandler = () => {
         let symbol = this.state.aIUser.symbol;
         let result = this.getBestMove(this.state.playGround,symbol)
-        let move = result.move;
+        let move = result.move; 
+          console.log(move);
         this.executeTurn(this.state.playGround, move, symbol)
         const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
         if(winnerInfo.result){
           const currentAiScore = this.state.aIScore + 1;
           const winnerAiSymbol = this.state.aIUser.symbol;
           this.setState({isGameOver: true, aIScore: currentAiScore, winnerSymbol: winnerAiSymbol});
+        }
+        if(!winnerInfo.result && this.state.moves === 8){
+          this.setState({winnerSymbol: '', isGameOver: true});
         }
     };
 
