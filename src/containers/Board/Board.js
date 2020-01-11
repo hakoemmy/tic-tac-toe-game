@@ -36,7 +36,6 @@ class Board extends Component{
             incomplete: 0,
             tie: 3,
         },
-        turn: Math.round(Math.random()),
 
     };
 
@@ -190,26 +189,13 @@ class Board extends Component{
     
         this.applyMove(board,move,symbol)
         let result = this.getResult(board, symbol).result
-    
-        // if (result === this.state.result.incomplete){
-        //   this.state.turn = (this.state.turn+1)%2
-        // } else {
-        //   if(result !== this.state.result.tie) {
-        //     let winningPlayer = this.state.aIUser;
-        //     winningPlayer.score++
-        //     console.log(winningPlayer);
-        //   }
-           
-        // }
-        // if (result == this.state.result.incomplete && this.state.isAiUserTurn){
-        //   this.aITurnHandler();
-        // }
+
       };
 
       findWinnerHandler = (player) => {   
         let result = true;
         let winningLine = [];
-       for (let j = 0; j < 3; j++) {     //first diagonal
+       for (let j = 0; j < 3; j++) {     
          result = result && (this.state.playGround[j][j] == player);
         } 
         if (result) {
@@ -219,7 +205,7 @@ class Board extends Component{
         };
       }
       result = true;
-for (let j = 0; j < 3; j++) {  //second diagonal
+for (let j = 0; j < 3; j++) {  
      result = result && (this.state.playGround[2-j][j] == player);
 }
     if (result) {
@@ -230,7 +216,7 @@ for (let j = 0; j < 3; j++) {  //second diagonal
     }
 for (let k = 0; k < 3; k++) {
     result = true;
-    for (let j = 0; j < 3; j++) {      //lines 
+    for (let j = 0; j < 3; j++) {     
         result = result && (this.state.playGround[k][j] == player);
     }
     if (result) {
@@ -240,7 +226,7 @@ for (let k = 0; k < 3; k++) {
         };
     }    
     result = true;
-    for (let j = 0; j < 3; j++) {      //colums
+    for (let j = 0; j < 3; j++) {     
         result = result && (this.state.playGround[j][k] == player);
     }
         if (result) {
@@ -278,8 +264,18 @@ for (let k = 0; k < 3; k++) {
         }
     };
 
+    removeReporterHandler = () => {
+     const clearedBoard = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""]
+    ];
+     this.setState({playGround: clearedBoard});
+     this.setState({isGameOver: false});
+     this.state.moves = 0;
+    }
+
     render(){
-      console.log('[Board] render()...')
         if(this.state.isAiUserTurn){
             this.aITurnHandler();
             this.setState({isAiUserTurn: false, isNaiveTurn: true});    
@@ -301,6 +297,7 @@ for (let k = 0; k < 3; k++) {
                <WinnerReporter 
                isGameOver={ this.state.isGameOver}
                winnerSymbol={this.state.winnerSymbol}
+               clicked={this.removeReporterHandler}
                />
                 <header>
                       <span>
