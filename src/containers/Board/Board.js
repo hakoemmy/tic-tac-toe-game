@@ -44,7 +44,7 @@ class Board extends Component{
         let moveCount = 0
         for (let i = 0; i<board.length; i++){
           for (let j = 0 ; j<board[i].length ; j++){
-            if (board[i][j]!=""){
+            if (board[i][j]!==""){
               moveCount++
             }
           }
@@ -102,7 +102,7 @@ class Board extends Component{
           return {result, winningLine};
         }
 
-        if (this.moveCount(board)==9){
+        if (this.moveCount(board)===9){
           result= this.state.result.tie;
           return {result, winningLine}
         }
@@ -160,8 +160,8 @@ class Board extends Component{
           let result = this.getResult(newBoard,symbol).result
           
           let score
-          if (result == this.state.result.tie) {score = 0}
-          else if (result == symbol) {
+          if (result ===this.state.result.tie) {score = 0}
+          else if (result === symbol) {
             score = 1
           }
           else {
@@ -188,15 +188,14 @@ class Board extends Component{
         }
     
         this.applyMove(board,move,symbol)
-        let result = this.getResult(board, symbol).result
+
 
       };
 
       findWinnerHandler = (player) => {   
         let result = true;
-        let winningLine = [];
        for (let j = 0; j < 3; j++) {     
-         result = result && (this.state.playGround[j][j] == player);
+         result = result && (this.state.playGround[j][j] === player);
         } 
         if (result) {
              return {
@@ -206,7 +205,7 @@ class Board extends Component{
       }
       result = true;
 for (let j = 0; j < 3; j++) {  
-     result = result && (this.state.playGround[2-j][j] == player);
+     result = result && (this.state.playGround[2-j][j] === player);
 }
     if (result) {
         return {
@@ -217,7 +216,7 @@ for (let j = 0; j < 3; j++) {
 for (let k = 0; k < 3; k++) {
     result = true;
     for (let j = 0; j < 3; j++) {     
-        result = result && (this.state.playGround[k][j] == player);
+        result = result && (this.state.playGround[k][j] === player);
     }
     if (result) {
         return  {
@@ -227,7 +226,7 @@ for (let k = 0; k < 3; k++) {
     }    
     result = true;
     for (let j = 0; j < 3; j++) {     
-        result = result && (this.state.playGround[j][k] == player);
+        result = result && (this.state.playGround[j][k] === player);
     }
         if (result) {
             return {
@@ -257,7 +256,7 @@ for (let k = 0; k < 3; k++) {
     aITurnHandler = () => {
         let symbol = this.state.aIUser.symbol;
         let result = this.getBestMove(this.state.playGround,symbol)
-        if(result!=undefined){
+        if(result!== undefined){
           let move = result.move; 
           this.executeTurn(this.state.playGround, move, symbol)
           const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
@@ -281,7 +280,7 @@ for (let k = 0; k < 3; k++) {
     ];
      this.setState({playGround: clearedBoard});
      this.setState({isGameOver: false});
-     this.state.moves = 0;
+     this.setState({moves: 0});
     }
 
     render(){
