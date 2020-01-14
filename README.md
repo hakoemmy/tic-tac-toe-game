@@ -35,9 +35,11 @@ These instructions will get you a copy of the project up and running on your loc
   3. Run the automated test by running `npm run test` command
 
 ## Running the game 
-  - Local
+  - Local demo
+  
       Run ```npm run start```
-  - Live
+  - Live demo
+  
      Simply try tic tac toe game on github pages [Play Tic tac toe game live](https://hakoemmy.github.io/tic-tac-toe-game/)
 ## Built With
 * Tools
