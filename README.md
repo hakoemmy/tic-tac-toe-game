@@ -1,4 +1,5 @@
 # tic-tac-toe-game
+[![Build Status](https://travis-ci.org/hakoemmy/tic-tac-toe-game.svg?branch=master)](https://travis-ci.org/hakoemmy/tic-tac-toe-game)
 > An AI player that wins and never loses against naive
 
 ## Getting Started
