@@ -242,7 +242,7 @@ for (let k = 0; k < 3; k++) {
       let symbol = this.state.naive.symbol;
       this.executeTurn(this.state.playGround, {row, column}, symbol)
       this.setState({isAiUserTurn: true, isNaiveTurn: false});
-      const winnerInfo = this.findWinnerHandler(this.state.aIUser.symbol);
+      const winnerInfo = this.findWinnerHandler(this.state.naive.symbol);
       if(winnerInfo.result){
         const currentNaiveScore = this.state.naiveScore + 1;
         const winnerNaiveSymbol = this.state.naive.symbol;

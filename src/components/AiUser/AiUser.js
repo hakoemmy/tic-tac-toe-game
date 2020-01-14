@@ -1,7 +1,7 @@
 import React from 'react';
 
 const aIUser = props => (
-    <label>
+    <label data-testid="aIScore">
           AI user: <strong>{props.score}</strong>
     </label>
 ); 
