@@ -10,8 +10,8 @@ describe('AiUser Component', ()=>{
         ReactDom.render(<AiUser/>, div);
     });
 
-    it('renders correct AIUser\' score', () =>{
-        const num;
+    it('renders correcttly AIUser\' score', () =>{
+        const num = 0;
         const { getByTestId } = render(<AiUser score= {num}/>);
         expect(getByTestId("aIScore")).toHaveTextContent(num);
     });
