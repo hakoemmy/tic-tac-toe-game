@@ -34,9 +34,11 @@ These instructions will get you a copy of the project up and running on your loc
   2. navigate to the directory of cloned project
   3. Run the automated test by running `npm run test` command
 
-## Running the gamne 
+## Running the game 
   - Local
       Run ```npm run start```
+  - Live
+     Simply try tic tac toe game on github pages [Play Tic tac toe game live](https://hakoemmy.github.io/tic-tac-toe-game/)
 ## Built With
 * Tools
    * npm: [Node JS](https://nodejs.org/)/[Express](https://expressjs.com/)
