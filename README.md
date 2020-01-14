@@ -38,7 +38,7 @@ These instructions will get you a copy of the project up and running on your loc
   - Local
       Run ```npm run start```
 ## Built With
-*Tools
+* Tools
    * npm: [Node JS](https://nodejs.org/)/[Express](https://expressjs.com/)
    * Linting Library: [ESLint](https://eslint.org)
    * Style Guide: [Airbnb](https://github.com/airbnb/javascript)
