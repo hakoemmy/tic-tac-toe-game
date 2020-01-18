@@ -41,74 +41,17 @@ class Board extends Component{
 
     moveCount = (board) => {
 
-        let moveCount = 0
-        for (let i = 0; i<board.length; i++){
-          for (let j = 0 ; j<board[i].length ; j++){
-            if (board[i][j]!==""){
-              moveCount++
-            }
+      let moveCount = 0
+      for (let i = 0; i<board.length; i++){
+        for (let j = 0 ; j<board[i].length ; j++){
+          if (board[i][j]!==""){
+            moveCount++
           }
         }
-        this.setState({moves: moveCount})
-        return moveCount
-      };
-
-     getResult = (board,symbol) => {
-
-        let result = this.state.result.incomplete
-        if (this.moveCount(board)<5){
-           return {result}
-        }
-  
-        const succession =  (line) => {
-          return (line === symbol.repeat(3))
-        }
-  
-        let line
-        let winningLine=[]
-  
-        for (let i = 0 ; i<3 ; i++){
-          line = board[i].join('')
-          if(succession(line)){
-            result = symbol;
-            winningLine = [[i,0], [i,1], [i,2]]
-            return {result, winningLine};
-          }
-        }
-  
-        for (let j=0 ; j<3; j++){
-          let column = [board[0][j],board[1][j],board[2][j]]
-          line = column.join('')
-          if(succession(line)){
-            result = symbol
-            winningLine = [[0,j], [1,j], [2,j]]
-            return {result, winningLine};
-          }
-        }
-  
-        let diag1 = [board[0][0],board[1][1],board[2][2]]
-        line = diag1.join('')
-        if(succession(line)){
-          result = symbol
-          winningLine = [[0,0], [1,1], [2,2]]
-          return {result, winningLine};
-        }
-  
-        let diag2 = [board[0][2],board[1][1],board[2][0]]
-        line = diag2.join('')
-        if(succession(line)){
-          result = symbol
-          winningLine = [[0,2], [1,1], [2,0]]
-          return {result, winningLine};
-        }
-
-        if (this.moveCount(board)===9){
-          result= this.state.result.tie;
-          return {result, winningLine}
-        }
-  
-        return {result}
-      };
+      }
+      this.setState({moves: moveCount})
+      return moveCount
+    };
 
      applyMove = (board,move, symbol) => {
         board[move.row][move.column]= symbol
@@ -157,17 +100,12 @@ class Board extends Component{
           let move = availableMoves[i]
           let newBoard = copyBoard(board)
           newBoard = this.applyMove(newBoard,move, symbol)
-          let result = this.getResult(newBoard,symbol).result
+          let result = this.findWinnerHandler(symbol).result
           
-          let score
-          if (result ===this.state.result.tie) {score = 0}
+          let score = 0;
+          if (result === this.state.result.tie) {score = 0}
           else if (result === symbol) {
             score = 1
-          }
-          else {
-            let otherSymbol = this.state.naive.symbol
-            let nextMove = this.getBestMove(newBoard, otherSymbol)
-            score = - (nextMove.score)
           }
           if(score === 1)
             return {move, score}
@@ -204,16 +142,16 @@ class Board extends Component{
         };
       }
       result = true;
-for (let j = 0; j < 3; j++) {  
-     result = result && (this.state.playGround[2-j][j] === player);
-}
+      for (let j = 0; j < 3; j++) {  
+      result = result && (this.state.playGround[2-j][j] === player);
+     }
     if (result) {
         return {
             result: result,
             player: player
         };
-    }
-for (let k = 0; k < 3; k++) {
+     }
+  for (let k = 0; k < 3; k++) {
     result = true;
     for (let j = 0; j < 3; j++) {     
         result = result && (this.state.playGround[k][j] === player);
@@ -234,22 +172,22 @@ for (let k = 0; k < 3; k++) {
                 player: player
             };
         } 
-}
+     }
      return false;
     }
     naiveTurnHandler = (row, column) => {
       let symbol = this.state.naive.symbol;
       this.executeTurn(this.state.playGround, {row, column}, symbol)
-      this.setState({isAiUserTurn: true, isNaiveTurn: false});
       const winnerInfo = this.findWinnerHandler(this.state.naive.symbol);
       if(winnerInfo.result){
         const currentNaiveScore = this.state.naiveScore + 1;
         const winnerNaiveSymbol = this.state.naive.symbol;
         this.setState({isGameOver: true, naiveScore: currentNaiveScore, winnerSymbol: winnerNaiveSymbol });
       }
-      if(!winnerInfo.result && this.state.moves === 8){
+      if(!winnerInfo.result && this.moveCount(this.state.playGround) === 8){
         this.setState({winnerSymbol: '', isGameOver: true});
       }
+      this.setState({isAiUserTurn: true, isNaiveTurn: false});
       
     };
 
@@ -265,7 +203,7 @@ for (let k = 0; k < 3; k++) {
             const winnerAiSymbol = this.state.aIUser.symbol;
             this.setState({isGameOver: true, aIScore: currentAiScore, winnerSymbol: winnerAiSymbol});
           }
-          if(!winnerInfo.result && this.state.moves === 8){
+          if(!winnerInfo.result && this.moveCount(this.state.playGround) === 8){
             this.setState({winnerSymbol: '', isGameOver: true});
           }
         }
@@ -281,6 +219,7 @@ for (let k = 0; k < 3; k++) {
      this.setState({playGround: clearedBoard});
      this.setState({isGameOver: false});
      this.setState({moves: 0});
+     this.setState({isAiUserTurn: true})
     }
 
     render(){
