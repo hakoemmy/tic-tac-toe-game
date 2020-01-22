@@ -69,6 +69,4 @@ These instructions will get you a copy of the project up and running on your loc
 
 This project is licensed under the MIT License - see the [LICENSE](LICENCE.md) file for details
 
-## Acknowledgments
 
-* [One World Coders](https://www.oneworldcoders.com/)
